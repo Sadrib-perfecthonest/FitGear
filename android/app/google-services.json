@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "742505244930",
+    "project_id": "fitgear-760eb",
+    "storage_bucket": "fitgear-760eb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742505244930:android:8f359eee21d3b9276a3a1b",
+        "android_client_info": {
+          "package_name": "com.test.FitGear"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWwGEpfjIkXNBlMLuSoO8Vg_zjxSzdwzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

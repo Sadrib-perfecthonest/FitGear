@@ -29,28 +29,22 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image
+            // Product Image Section
             Expanded(
               flex: 3,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(AppSizes.borderRadius),
-                  ),
-                  color: Colors.grey[200],
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(AppSizes.borderRadius),
                 ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(AppSizes.borderRadius),
-                  ),
+                child: Container(
+                  width: double.infinity,
+                  color: Colors.grey[200],
                   child: product.imageUrls.isNotEmpty
                       ? CachedNetworkImage(
                           imageUrl: product.imageUrls.first,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => const Icon(
                             Icons.fitness_center,
                             size: 48,
@@ -65,53 +59,66 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            // Product Info
+            // Product Info Section
             Expanded(
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.all(AppSizes.paddingMedium),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Product Name
-                    Text(
-                      product.name,
-                      style: AppTextStyles.heading3.copyWith(fontSize: 16),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    // Product Name and Category
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          style: AppTextStyles.heading3.copyWith(fontSize: 16),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          product.category,
+                          style: AppTextStyles.bodyTextSmall,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    // Category
-                    Text(
-                      product.category,
-                      style: AppTextStyles.bodyTextSmall,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Spacer(),
                     // Rating and Price
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.star,
-                              size: 16,
-                              color: Colors.amber,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${product.rating.toStringAsFixed(1)} (${product.reviewCount})',
-                              style: AppTextStyles.caption,
-                            ),
-                          ],
+                        Flexible(
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                size: 16,
+                                color: Colors.amber,
+                              ),
+                              const SizedBox(width: 4),
+                              Flexible(
+                                child: Text(
+                                  '${product.rating.toStringAsFixed(1)} (${product.reviewCount})',
+                                  style: AppTextStyles.caption,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          '\$${product.price.toStringAsFixed(2)}',
-                          style: AppTextStyles.heading3.copyWith(
-                            color: AppColors.primary,
-                            fontSize: 18,
+                        Flexible(
+                          child: Text(
+                            '\$${product.price.toStringAsFixed(2)}',
+                            style: AppTextStyles.heading3.copyWith(
+                              color: AppColors.primary,
+                              fontSize: 18,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
                           ),
                         ),
                       ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../services/product_service.dart';
-import '../services/order_service.dart'; // Re-enabled for debugging
+import '../services/order_service.dart';
 import '../providers/auth_provider.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/product_card.dart';
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadCartItems() {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    
+
     if (authProvider.user != null) {
       cartProvider.loadCartItems(authProvider.user!.uid);
       // Mock orders loading disabled - data already in database
@@ -97,11 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: _buildAppBar(),
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
-          _buildHomeTab(),
-          const CartScreen(),
-          const ProfileScreen(),
-        ],
+        children: [_buildHomeTab(), const CartScreen(), const ProfileScreen()],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -113,10 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
       foregroundColor: Colors.white,
       title: const Text(
         'FitGear',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
       actions: _selectedIndex == 0
           ? [
@@ -202,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        
+
         // Category Filter
         if (_searchQuery.isEmpty)
           Container(
@@ -214,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 final category = _categories[index];
                 final isSelected = category == _selectedCategory;
-                
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: FilterChip(
@@ -233,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-        
+
         // Products Grid
         Expanded(
           child: StreamBuilder<List<Product>>(
@@ -242,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               }
-              
+
               if (snapshot.hasError) {
                 return Center(
                   child: Column(
@@ -267,9 +260,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               }
-              
+
               final products = snapshot.data ?? [];
-              
+
               if (products.isEmpty) {
                 return Center(
                   child: Column(
@@ -281,10 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppColors.textSecondary,
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        'No products found',
-                        style: AppTextStyles.heading3,
-                      ),
+                      Text('No products found', style: AppTextStyles.heading3),
                       const SizedBox(height: 8),
                       Text(
                         'Try searching for something else',
@@ -294,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               }
-              
+
               return GridView.builder(
                 padding: const EdgeInsets.all(AppSizes.paddingMedium),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -327,18 +317,9 @@ class _HomeScreenState extends State<HomeScreen> {
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.textSecondary,
       items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: 'Cart',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
     );
   }
